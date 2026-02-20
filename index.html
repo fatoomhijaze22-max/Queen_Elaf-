@@ -8,19 +8,20 @@
         body { background-color: #ffeef8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
         #box { background: white; border-radius: 25px; padding: 30px; box-shadow: 0 15px 30px #ffb6c1; text-align: center; border: 4px solid #ffb6c1; width: 85%; max-width: 400px; position: relative; z-index: 10; }
         .kitty-container { position: relative; display: inline-block; }
-        .kitty-img { width: 100px; margin-bottom: 10px; transition: 0.3s; }
+        .kitty-img { width: 120px; margin-bottom: 10px; transition: 0.3s; border-radius: 15px; }
         h1 { color: #d63384; font-size: 1.3rem; line-height: 1.6; min-height: 80px; transition: 0.5s; }
         input { padding: 12px; border-radius: 12px; border: 2px solid #ffb6c1; width: 80%; outline: none; text-align: center; font-size: 16px; }
         button { background: #ffb6c1; border: none; padding: 12px 30px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* بوسة هالو كيتي */
-        #kiss { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 40px; opacity: 0; pointer-events: none; }
+        /* أنيميشن البوسة */
+        #kiss { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 50px; opacity: 0; pointer-events: none; }
         @keyframes kissAnimation {
             0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
-            50% { opacity: 1; transform: translateX(-50%) scale(1.5); }
-            100% { opacity: 0; transform: translateX(-50%) scale(3); top: -100px; }
+            50% { opacity: 1; transform: translateX(-50%) scale(2); }
+            100% { opacity: 0; transform: translateX(-50%) scale(4); top: -150px; }
         }
 
+        /* تأثير الورد المتساقط */
         .falling-item { position: absolute; top: -20px; font-size: 20px; z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
         .fadeIn { animation: fadeIn 2s; }
@@ -30,7 +31,7 @@
 <body>
     <div id="box">
         <div class="kitty-container">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kit.png/220px-Hello_kit.png" class="kitty-img" id="kitty">
+            <img src="kitty.jpg" class="kitty-img" id="kitty">
             <div id="kiss">❤️</div>
         </div>
         <h1 id="text">أويييييه! أنا هالو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
@@ -92,7 +93,6 @@
         }
 
         function showFinalMessage() {
-            // انيميشن البوسة
             const kiss = document.getElementById('kiss');
             kiss.style.animation = "kissAnimation 1.5s ease-out forwards";
             
