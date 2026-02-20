@@ -3,88 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎀 مفاجأة لست البنات 🎀</title>
+    <title>🎀 مفاجأة خاصة 🎀</title>
     <style>
-        body { background: radial-gradient(circle, #fff0f5 0%, #ffeef8 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
-        #box { background: rgba(255, 255, 255, 0.9); border-radius: 30px; padding: 30px; box-shadow: 0 20px 40px #ffb6c1; text-align: center; border: 4px solid #ffb6c1; width: 85%; max-width: 400px; position: relative; z-index: 10; animation: fadeIn 1s ease-in; }
-        .kitty-container { display: flex; justify-content: center; margin-bottom: 15px; }
-        
-        /* هاد الحجم بيخليها واضحة جداً */
-        .kitty-img { width: 180px; height: auto; filter: drop-shadow(0 10px 15px rgba(255, 133, 162, 0.4)); animation: float 3s ease-in-out infinite; }
-        
-        h1 { color: #d63384; font-size: 1.3rem; line-height: 1.6; min-height: 80px; }
-        input { padding: 12px; border-radius: 15px; border: 2px solid #ffb6c1; width: 85%; outline: none; text-align: center; font-size: 16px; margin-bottom: 15px; transition: 0.3s; }
-        input:focus { box-shadow: 0 0 10px #ffb6c1; }
-        button { background: linear-gradient(45deg, #ff85a2, #d63384); border: none; padding: 12px 35px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3); }
-
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .particle { position: absolute; pointer-events: none; animation: fall linear forwards; }
+        body { background: #fff0f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        .container { display: flex; align-items: center; gap: 20px; width: 90%; max-width: 800px; flex-wrap: wrap; justify-content: center; }
+        #box { background: white; border-radius: 30px; padding: 30px; box-shadow: 0 15px 40px #ffb6c1; text-align: center; border: 4px solid #ffb6c1; flex: 1.5; min-width: 300px; z-index: 10; }
+        .kitty-box { flex: 1; display: flex; justify-content: center; position: relative; }
+        /* استخدام رابط صورة مباشر ومفرغ لضمان الوضوح التام */
+        .kitty-img { width: 200px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); animation: float 3s ease-in-out infinite; }
+        h1 { color: #d63384; font-size: 1.3rem; line-height: 1.6; }
+        input { padding: 12px; border-radius: 15px; border: 2px solid #ffb6c1; width: 85%; text-align: center; margin-bottom: 15px; }
+        button { background: linear-gradient(45deg, #ff85a2, #d63384); border: none; padding: 12px 35px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .falling { position: absolute; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
-    <div id="box">
-        <div class="kitty-container">
-            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img" alt="Hello Kitty">
+    <div class="container">
+        <div id="box">
+            <h1 id="text">أويييييه! أنا لولو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
+            <div id="ui">
+                <input type="text" id="nameInp" placeholder="اكتبي اسمك هون...">
+                <br>
+                <button onclick="go()">إرسال 🎀</button>
+            </div>
         </div>
-        <h1 id="text">أويييييه! أنا هالو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
-        <div id="action-area">
-            <input type="text" id="nameInp" placeholder="اكتبي اسمك هون...">
-            <br>
-            <button onclick="startStory()">إرسال 🎀</button>
+        <div class="kitty-box">
+            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img">
         </div>
     </div>
-
     <script>
-        let step = 0; let userName = "";
-        const story = [
-            "يا مية أهلاً بـ [NAME]! نورتي يا أغلى البشر.. 😍",
-            "بصراحة.. معتصم وصاني قلك كلام كتير كبير بقلبه.. 🥺",
-            "بيحكيلي إنك الصبر والأمل اللي بخليه يبتسم دايماً.. 🌟",
-            "وقلي كمان.. إنه روحه معلقة بروحك وما بيقدر يعيش بدونك.. 💍",
-            "جاهزة تشوفي الرسالة اللي انكتبت بماء الذهب لعيونك؟ ❤️"
-        ];
-
-        function createParticles() {
-            const items = ['🌸', '💖', '✨', '🌹', '🎀'];
-            for(let i=0; i<8; i++) {
-                setTimeout(() => {
-                    const p = document.createElement('div');
-                    p.className = 'particle';
-                    p.innerHTML = items[Math.floor(Math.random() * items.length)];
-                    p.style.left = Math.random() * 100 + 'vw';
-                    p.style.top = '-20px';
-                    p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                    p.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.body.appendChild(p);
-                    setTimeout(() => p.remove(), 4000);
-                }, i * 150);
+        let s = 0; let n = "";
+        const m = ["نورتي يا [NAME]! 😍", "معتصم وصاني قلك كلام كتير.. 🥺", "بيحكيلي إنك أغلى قطعة بقلبه.. ❤️", "جاهزة تشوفي اعترافه الأخير؟ ❤️"];
+        function effect() {
+            for(let i=0; i<10; i++) {
+                let p = document.createElement('div'); p.className='falling'; p.innerHTML='🌸';
+                p.style.left=Math.random()*100+'vw'; p.style.top='-20px';
+                p.style.animationDuration=(Math.random()*2+2)+'s'; document.body.appendChild(p);
             }
         }
-
-        function startStory() {
-            if (step === 0) {
-                userName = document.getElementById('nameInp').value;
-                if (!userName) return;
-                document.getElementById('nameInp').style.display = "none";
-            }
-            createParticles();
-            if (step < story.length) {
-                document.getElementById('text').innerHTML = story[step].replace("[NAME]", userName);
-                step++;
-            } else {
-                document.getElementById('text').innerHTML = `
-                    <div style="color: #c2185b; font-weight: bold; animation: fadeIn 2s;">
-                        ❤️❤️❤️<br>
-                        يا ${userName}، أنتي عالمي كله!<br>
-                        الله يخليلي ياكي يا نبض القلب!<br>
-                        ❤️❤️❤️
-                    </div>`;
-                document.querySelector('button').style.display = "none";
-                setInterval(createParticles, 1500);
+        function go() {
+            if(s===0) { n=document.getElementById('nameInp').value; if(!n) return; document.getElementById('nameInp').style.display='none'; }
+            effect();
+            if(s<m.length) { document.getElementById('text').innerHTML=m[s].replace("[NAME]", n); s++; }
+            else { 
+                document.getElementById('text').innerHTML=`<div style="color:#d63384; font-weight:bold;">يا ${n}، أنتي عالمي كله! ❤️ نبض قلبي ❤️</div>`;
+                document.querySelector('button').style.display='none'; setInterval(effect, 1000);
             }
         }
     </script>
 </body>
 </html>
+
