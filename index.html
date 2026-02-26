@@ -1,114 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎀 مفاجأة لست البنات 🎀</title>
+    <title>👑 برنسيسة معتصم 👑</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap');
+        
         body { 
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%); 
+            background: #fff5f7; 
+            background-image: radial-gradient(#fce4ec 2px, transparent 2px);
+            background-size: 30px 30px;
             display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; 
+            min-height: 100vh; margin: 0; font-family: 'Cairo', sans-serif; overflow: hidden; 
         }
-        .main-container { 
-            display: flex; align-items: center; gap: 20px; width: 90%; max-width: 800px; 
-            flex-direction: row; /* يمين ويسار */
-        }
-        #box { 
-            background: rgba(255, 255, 255, 0.9); border-radius: 30px; padding: 30px; 
-            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.5); text-align: center; 
-            border: 4px solid #ffb6c1; flex: 2; position: relative; z-index: 10; 
-        }
-        .kitty-container { flex: 1; display: flex; justify-content: center; position: relative; }
-        
-        /* هاد الرابط بجيب صورة هالو كيتي أصلية ومفرغة ومضمونة تظهر هسا */
-        .kitty-img { 
-            width: 200px; height: auto; 
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); 
-            animation: float 3s ease-in-out infinite; 
-        }
-        
-        h1 { color: #d63384; font-size: 1.3rem; line-height: 1.6; min-height: 80px; }
-        input { padding: 12px; border-radius: 15px; border: 2px solid #ffb6c1; width: 85%; outline: none; text-align: center; margin-bottom: 15px; }
-        button { 
-            background: linear-gradient(45deg, #ff85a2, #d63384); border: none; 
-            padding: 12px 35px; border-radius: 50px; color: white; font-weight: bold; 
-            cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3); 
-        }
-        
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .particle { position: absolute; pointer-events: none; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-        @media (max-width: 600px) {
-            .main-container { flex-direction: column-reverse; }
-            .kitty-img { width: 150px; }
+        .main-card { 
+            background: rgba(255, 255, 255, 0.98); border-radius: 50px 5px 50px 5px; 
+            padding: 40px; box-shadow: 0 20px 60px rgba(173, 20, 87, 0.15); 
+            text-align: center; border-right: 8px solid #ad1457; border-left: 8px solid #ad1457;
+            width: 85%; max-width: 500px; position: relative; animation: fadeIn 1.5s;
         }
+
+        .kitty-header { animation: floating 3s ease-in-out infinite; margin-bottom: 10px; }
+        .kitty-img { width: 140px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+
+        h1 { 
+            color: #ad1457; font-family: 'Amiri', serif; font-size: 1.5rem; 
+            line-height: 1.8; margin: 20px 0; min-height: 160px; transition: 0.5s;
+        }
+
+        .btn-magic { 
+            background: #ad1457; border: none; padding: 12px 45px; border-radius: 50px; 
+            color: white; font-weight: bold; cursor: pointer; font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(173, 20, 87, 0.4); transition: 0.3s;
+        }
+
+        #ui-area input { 
+            padding: 15px; border-radius: 15px; border: 2px solid #f48fb1; 
+            width: 80%; text-align: center; font-size: 18px; outline: none; margin-bottom: 20px;
+        }
+
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        .heart { position: absolute; color: #ad1457; pointer-events: none; animation: flyUp linear forwards; z-index: 100; }
+        @keyframes flyUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100vh) scale(2); opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div id="box">
-            <h1 id="text">أويييييه! أنا لولو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
-            <div id="action-area">
-                <input type="text" id="nameInp" placeholder="اكتبي اسمك هون...">
-                <br>
-                <button onclick="startStory()">إرسال 🎀</button>
-            </div>
+
+    <div class="main-card">
+        <div class="kitty-header">
+            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img">
         </div>
-        <div class="kitty-container">
-            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img" alt="Kitty">
+        
+        <h1 id="display-text">هلا بست البنات.. <br>هلا ببرنسيسة معتصم ❤️✨</h1>
+        
+        <div id="ui-area">
+            <input type="text" id="nameInput" placeholder="اكتبي اسمك يا أميرة...">
+            <br>
+            <button class="btn-magic" onclick="startJourney()">ادخلي لقلبي 💖</button>
         </div>
     </div>
 
     <script>
-        let step = 0; let userName = "";
-        const story = [
-            "يا مية أهلاً بـ [NAME]! نورتي يا أغلى البشر.. 😍",
-            "بصراحة.. معتصم وصاني قلك كلام كتير كبير بقلبه.. 🥺",
-            "بيحكيلي إنك الصبر والأمل اللي بخليه يبتسم دايماً.. 🌟",
-            "وقلي كمان.. إنه روحه معلقة بروحك وما بيقدر يعيش بدونك.. 💍",
-            "جاهزة تشوفي الرسالة اللي انكتبت بماء الذهب لعيونك؟ ❤️"
+        let step = 0;
+        let userName = "";
+
+        const verses = [
+            "يا [NAME].. يا وجهاً تبارك فيه ربي، <br> يا أجمل من رأت عينايَ دربي.. 😍",
+            "سألتُ الله في سري جهاراً، <br> بأن تبقي بجنبي، نبضَ قلبي.. ❤️",
+            "أريدكِ سـنـداً لي، وأنيساً لـوحشتي، <br> ورفيقاً لظلامِ دربي، ووليفةً لقلبي.. ✨",
+            "وملاذاً إذا ما ضاق بي زمني، <br> وصباحاً يُزيحُ الهمَّ عن دربي.. 🌹",
+            "فأنتِ الكفايةُ التي لا أرجو بعدها أحداً، <br> وأنتِ الغايةُ التي استوطنت لُبّي.. 💍",
+            "فلا تسلي عن مقدارِ حبي، <br> فحبكِ في عروقِ الروحِ يُزرع.. ❤️"
         ];
 
-        function createParticles() {
-            const items = ['🌸', '💖', '✨', '🌹', '🎀'];
-            for(let i=0; i<8; i++) {
+        function createHearts() {
+            for(let i=0; i<15; i++) {
                 setTimeout(() => {
-                    const p = document.createElement('div');
-                    p.className = 'particle';
-                    p.innerHTML = items[Math.floor(Math.random() * items.length)];
-                    p.style.left = Math.random() * 100 + 'vw';
-                    p.style.top = '-20px';
-                    p.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.body.appendChild(p);
-                    setTimeout(() => p.remove(), 4000);
-                }, i * 150);
+                    const h = document.createElement('div');
+                    h.className = 'heart'; h.innerHTML = '❤️';
+                    h.style.left = Math.random() * 100 + 'vw';
+                    h.style.top = '100vh';
+                    h.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    h.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(h);
+                    setTimeout(() => h.remove(), 4000);
+                }, i * 100);
             }
         }
 
-        function startStory() {
+        function startJourney() {
             if (step === 0) {
-                userName = document.getElementById('nameInp').value;
+                userName = document.getElementById('nameInput').value;
                 if (!userName) return;
-                document.getElementById('nameInp').style.display = "none";
+                document.getElementById('ui-area').innerHTML = '<button class="btn-magic" onclick="startJourney()">وبعدين؟ ❤️</button>';
             }
-            createParticles();
-            if (step < story.length) {
-                document.getElementById('text').innerHTML = story[step].replace("[NAME]", userName);
+
+            createHearts();
+
+            if (step < verses.length) {
+                document.getElementById('display-text').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('display-text').innerHTML = verses[step].replace("[NAME]", userName);
+                    document.getElementById('display-text').style.opacity = 1;
+                }, 300);
                 step++;
             } else {
-                document.getElementById('text').innerHTML = `
-                    <div style="color: #c2185b; font-weight: bold; animation: fadeIn 2s;">
-                        ❤️❤️❤️<br>
-                        يا ${userName}، أنتي عالمي كله!<br>
-                        الله يخليلي ياكي يا نبض القلب!<br>
-                        ❤️❤️❤️
-                    </div>`;
-                document.querySelector('button').style.display = "none";
-                setInterval(createParticles, 1500);
+                showFinalMessage();
             }
+        }
+
+        function showFinalMessage() {
+            document.getElementById('display-text').innerHTML = `
+                <div style="font-size: 1.15rem; color: #ad1457; line-height: 1.7; font-family: 'Cairo', sans-serif;">
+                    في شخص مجنون بدباديبك <br> 
+                    اسمو <b>معتصم</b> <br>
+                    حب يوصلك هل رسالة: <br><br>
+                    <span style="font-family: 'Amiri', serif; font-size: 1.4rem; background: #fff0f5; padding: 8px 15px; border-radius: 15px; display: block;">
+                        "أريدكِ سـنـداً لي وأنيساً لوحشتي، ورفيقاً لظلامِ دربي، ووليفةً لقلبي."
+                    </span> <br>
+                    لأني ببساطة.. بعشقك لآخر نفس! ❤️
+                </div>`;
+            document.getElementById('ui-area').style.display = "none";
+            setInterval(createHearts, 1000);
         }
     </script>
 </body>
