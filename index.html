@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى جنى.. حبيبي هو ❤️</title>
+    <title>إلى جنى.. الوحيدة في قلبي 💖</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;700&display=swap');
 
@@ -36,25 +36,21 @@
             margin-bottom: 20px;
         }
 
-        /* تنسيق إطار الفيديو الأحمر (نفس الصورة المطلوبة) */
-        .video-wrapper {
+        /* محاكي مشغل الفيديو مع الإطار الأحمر المطلوب */
+        .custom-player {
             position: relative;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
-            height: 0;
-            overflow: hidden;
+            width: 100%;
+            background: #000;
             border-radius: 15px;
-            border: 10px solid #cc0000; /* الإطار الأحمر السميك */
+            border: 10px solid #cc0000; /* الإطار الأحمر من الصورة */
             margin: 30px 0;
+            overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        video {
             width: 100%;
-            height: 100%;
-            border: 0;
+            display: block;
         }
 
         .poem-card {
@@ -101,29 +97,23 @@
             position: absolute;
         }
 
-        #success-msg {
-            display: none;
-            font-size: 1.5em;
-            color: #ff4d6d;
-            margin-top: 20px;
-        }
+        #success { display: none; }
     </style>
 </head>
 <body>
 
     <div class="container" id="card">
-        <div style="font-size: 50px;">❤️</div>
-        <h1>إلى جنى.. الوحيدة في قلبي</h1>
-        
+        <h1>إلى جنى.. الوحيدة في قلبي ❤️</h1>
         <p style="font-size: 1.2em; color: #666;">محمود التركي بيقولك: "حبيبي هو.."</p>
 
-        <div class="video-wrapper">
-            <iframe 
-                src="https://www.youtube.com/embed/SshsX6YI2jQ" 
-                title="Mahmoud Al Turky - Habibi Huwa" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-            </iframe>
+        <div class="custom-player">
+            <video controls poster="kitty.jpg">
+                <source src="El2oxQd95z4.mp3" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت.
+            </video>
+            <div style="background: #cc0000; color: white; padding: 5px; font-size: 0.8em; font-weight: bold;">
+                محمود التركي - حبيبي هو
+            </div>
         </div>
 
         <div class="poem-card">
@@ -134,7 +124,7 @@
             فـأنتِ المَـدا، وأنتِ السَّـنا، وأنتِ العُـمرُ
         </div>
 
-        <p style="font-weight: bold; color: #ff4d6d; font-size: 1.3em;">هل تصفحين عن معتصم؟ 🥺</p>
+        <p style="font-weight: bold; color: #ff4d6d; font-size: 1.3em;">سامحتيني يا جنى؟ 🥺</p>
 
         <div class="btn-group">
             <button class="btn btn-yes" onclick="accepted()">سامحتك يا معتصم</button>
@@ -143,7 +133,7 @@
     </div>
 
     <div id="success" class="container" style="display:none;">
-        <div style="font-size: 100px;">💖</div>
+        <div style="font-size: 80px;">💖</div>
         <h1>شكراً يا أغلى جنى!</h1>
         <p style="font-size: 1.4em;">وعد معتصم بضل للأبد.. بحبك ❤️</p>
     </div>
@@ -165,11 +155,9 @@
             document.getElementById('card').style.display = 'none';
             document.getElementById('success').style.display = 'block';
 
-            // إرسال الإشعار لتليجرام
-            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent("🎉 مبروك يا معتصم! جنى سامحتك وشافت أغنية محمود التركي ❤️")}`);
+            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent("🎉 مبروك! جنى سامحتك وسمعت محمود التركي ❤️")}`);
 
-            // تأثير القلوب الطائرة
-            for(let i=0; i<35; i++) {
+            for(let i=0; i<30; i++) {
                 setTimeout(createHeart, i * 100);
             }
         }
