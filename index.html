@@ -15,7 +15,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            position: relative;
         }
 
         /* تأثير الورد المتساقط */
@@ -33,93 +34,102 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* كيتي كأنها مجسم 3D متحرك */
-        .kitty-3d {
+        /* كيتي المجسمة الثابتة في الزاوية */
+        .kitty-3d-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 80px; /* حجم صغير عشان ما تغطي الكلام */
-            z-index: 2000;
-            filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.2)); /* تأثير الظل ليعطي عمق 3D */
-            animation: float3D 3s ease-in-out infinite;
+            bottom: 10px;
+            right: 10px;
+            width: 100px; /* حجم صغير ومناسب */
+            z-index: 9999; /* عشان تضل فوق كل شي وما تختفي */
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: bounce3D 2s infinite ease-in-out;
             cursor: pointer;
         }
 
-        @keyframes float3D {
-            0%, 100% { transform: translateY(0) rotateY(0deg) scale(1); }
-            50% { transform: translateY(-20px) rotateY(20deg) scale(1.1); }
+        @keyframes bounce3D {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
         }
 
         .container {
             max-width: 400px;
             width: 90%;
             background: white;
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            padding: 30px;
+            border-radius: 35px;
+            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.15);
             text-align: center;
             border: 2px solid #ffd1dc;
             z-index: 10;
+            position: relative;
         }
 
         .player-card {
             background: #cc0000;
-            border-radius: 15px;
-            padding: 10px;
-            margin: 15px 0;
-            border: 4px solid #a00000;
+            border-radius: 20px;
+            padding: 12px;
+            margin: 20px 0;
+            border: 5px solid #a00000;
         }
 
-        iframe { width: 100%; height: 80px; border-radius: 10px; border: none; }
+        iframe { width: 100%; height: 85px; border-radius: 12px; border: none; }
 
         .btn-love {
-            background: #ff4d6d;
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
             color: white;
-            padding: 12px 30px;
+            padding: 15px;
             border: none;
             border-radius: 50px;
             font-weight: bold;
+            font-size: 1.1em;
             cursor: pointer;
-            margin-top: 15px;
             width: 100%;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            transition: 0.3s;
         }
+
+        .btn-love:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
     <script>
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 25; i++) {
             let rose = document.createElement('div');
             rose.className = 'rose';
             rose.innerHTML = '🌸';
             rose.style.left = Math.random() * 100 + 'vw';
-            rose.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            rose.style.delay = Math.random() * 5 + 's';
+            rose.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            rose.style.opacity = Math.random();
             document.body.appendChild(rose);
         }
     </script>
 
-    <div class="kitty-3d" onclick="alert('إيلاف.. معتصم بيحبك وبيهتم فيكي!')">
-        <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="3D Kitty">
+    <div class="kitty-3d-container" onclick="chatWithElaf()">
+        <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="Kitty 3D">
     </div>
 
     <div class="container">
-        <h1 style="color: #ff4d6d; font-family: 'Amiri'; margin: 0;">إلى إيلاف.. قلبي ❤️</h1>
+        <h1 style="color: #ff4d6d; font-family: 'Amiri'; margin-bottom: 10px;">إلى إيلاف.. قلبي ❤️</h1>
         
         <div class="player-card">
-            <div style="color:white; font-size: 0.8em; margin-bottom:5px;">🎵 محمود التركي - حبيبي هو</div>
+            <div style="color:white; font-weight:bold; margin-bottom:8px;">🎵 محمود التركي - حبيبي هو</div>
             <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ"></iframe>
         </div>
 
-        <p style="font-size: 0.9em; color: #555;">معتصم بيوثق فيكي أكثر من أي شي في الدنيا..</p>
-        <p style="font-weight: bold; color: #d63384;">أوعديه تضلي مخلصة إله ولحبكم؟ 🥺</p>
+        <p style="color: #666; font-size: 1em;">معتصم بيوثق فيكي أكثر من أي شي في الدنيا..</p>
+        <p style="font-weight: bold; color: #d63384; margin: 15px 0;">أوعديه تضلي مخلصة إله ولحبكم؟ 🥺</p>
 
         <button class="btn-love" onclick="sendPromise()">أوعدك يا معتصم ❤️</button>
     </div>
 
     <script>
+        function chatWithElaf() {
+            alert("إيلاف.. كيتي بتقلك إن معتصم بموت فيكي ودايماً بيفكر فيكي! ✨");
+        }
+
         function sendPromise() {
-            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف شافت الموقع ووعدتك تضل مخلصة! ❤️")}`);
+            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف وعدتك تضل مخلصة وبتحبك! وكيتي رجعت لمكانها! 😂❤️")}`);
             alert("أحلى وعد بالدنيا! وصلت الرسالة لمعتصم ❤️");
         }
     </script>
