@@ -1,211 +1,105 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى إيلاف.. حبي الوحيد ❤️</title>
+    <title>إلى إيلاف ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: #fff5f7;
-            margin: 0;
-            overflow: hidden; /* لمنع شريط التمرير بسبب الورد المتساقط */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            position: relative;
+        body { 
+            /* الخلفية اللي اخترتها مع تثبيتها */
+            background-image: url('https://i.ibb.co/hR0V6vB0/1000101751.jpg'); 
+            background-size: cover; 
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            overflow: hidden; 
+            position: relative; 
         }
 
-        /* أنيميشن تساقط الورد والقلوب */
-        .snowflake {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #ffb6c1; /* لون وردي فاتح */
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0); }
-            100% { transform: translateY(110vh) translateX(20px); }
-        }
-
-        /* كيتي المتحركة بفرح (النط والدوران) */
-        .kitty-character {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 130px;
-            z-index: 1000;
+        /* كيتي المجسمة الجديدة (كأيقونة 3D) */
+        #kittyIcon {
+            position: fixed !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            width: 110px !important; /* حجم مثالي كأيقونة */
+            z-index: 999999 !important;
+            animation: floating3D 3s infinite ease-in-out;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.3)); /* ظل يعطي عمق للمجسم */
+            pointer-events: auto;
             cursor: pointer;
-            clip-path: inset(5% 15% 10% 15% round 30%); /* قص احترافي */
-            animation: kittyHappy 2s infinite ease-in-out;
-            transition: all 0.5s;
         }
 
-        @keyframes kittyHappy {
-            0%, 100% { transform: scale(1) translateY(0) rotate(0deg); }
-            25% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
-            50% { transform: scale(1.15) translateY(-30px) rotate(-5deg); }
-            75% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
+        @keyframes floating3D {
+            0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(3deg) scale(1.05); }
         }
 
-        /* فقاعة الكلام */
-        .speech-bubble {
-            position: fixed;
-            bottom: 180px;
-            right: 40px;
-            background: white;
-            padding: 20px;
-            border-radius: 25px;
-            border: 3px solid #ff4d6d;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
-            max-width: 250px;
-            text-align: center;
-            font-weight: bold;
-            color: #d63384;
-            z-index: 1001;
-            display: block;
-            line-height: 1.6;
-        }
-
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: 40px;
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: white transparent transparent;
-        }
-
-        /* كارت المفاجأة النهائي */
-        .main-container {
-            max-width: 500px;
-            width: 90%;
-            background: white;
-            padding: 35px;
+        .main-card {
+            max-width: 380px;
+            width: 85%;
+            background: rgba(255, 255, 255, 0.95); /* جعل الكرت شفاف قليلاً ليعطي جمالية */
+            padding: 30px;
             border-radius: 40px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 45px rgba(255, 77, 109, 0.2);
             text-align: center;
             border: 2px solid #ffd1dc;
-            display: none;
             position: relative;
+            z-index: 10;
         }
 
-        /* هالو كيتي وهي بتبوسها (تظهر في النهاية) */
-        .kitty-kiss {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            display: none;
-            animation: kissEmote 1.5s ease-out;
+        .player-box { background: #cc0000; border-radius: 20px; padding: 12px; margin: 20px 0; border: 5px solid #a00000; }
+        iframe { width: 100%; height: 85px; border: none; border-radius: 12px; }
+        
+        .btn-promise { 
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3); 
+            color: white; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 50px; 
+            width: 100%; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.1em;
+            box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3);
         }
 
-        @keyframes kissEmote {
-            0% { transform: translateX(-50%) scale(0); opacity: 0; }
-            50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
-            100% { transform: translateX(-50%) scale(1); opacity: 1; }
-        }
-
-        .player-box {
-            background: #cc0000;
-            border: 6px solid #a00000;
-            border-radius: 20px;
-            margin: 25px 0;
-            overflow: hidden;
-        }
-
-        iframe { width: 100%; height: 90px; border: none; }
-
-        .btn-yes {
-            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-        }
+        /* الورد المتساقط */
+        .rose { position: absolute; top: -20px; z-index: 1; animation: fall 4s linear infinite; font-size: 22px; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <script>
-        for (let i = 0; i < 30; i++) {
-            let flake = document.createElement('div');
-            flake.className = 'snowflake';
-            flake.style.left = Math.random() * 100 + 'vw';
-            flake.style.animationDuration = Math.random() * 3 + 2 + 's'; // سرعات مختلفة
-            flake.style.opacity = Math.random();
-            document.body.appendChild(flake);
-        }
-    </script>
+    <img id="kittyIcon" src="https://i.ibb.co/3ykpY6v9/1000101754.png" alt="3D Kitty Icon" onclick="alert('إيلاف.. معتصم بموت فيكي ودايماً بيفكر فيكي! ✨')">
 
-    <div id="bubble" class="speech-bubble">أهلاً إيلاف! ممكن أسألك سؤال؟ 🤔</div>
-    <div class="kitty-character" onclick="chat()">
-        <img src="kitty.jpg" style="width: 100%;" alt="Kitty">
-    </div>
-
-    <div class="main-container" id="content">
-        <div class="kitty-kiss" id="kittyKiss">
-            <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="Kitty Kiss">
-        </div>
-
-        <h1 style="color: #ff4d6d; font-family: 'Amiri'; font-size: 2.5em;">إلى إيلاف.. قلبي ❤️</h1>
+    <div class="main-card">
+        <h1 style="color: #ff4d6d; font-family: 'Amiri'; margin: 0; font-size: 2.2em;">إلى إيلاف.. قلبي ❤️</h1>
         <div class="player-box">
-            <div style="color:white; padding:5px; font-weight:bold;">🎵 محمود التركي - حبيبي هو</div>
             <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ"></iframe>
         </div>
-        <p style="font-size: 1.2em; color: #555;">معتصم بيحبك وبيوثق فيكي أكثر من أي شي..</p>
-        <p style="font-size: 1.1em; color: #d63384; font-weight: bold;">أوعديه تضلي مخلصة إله ولحبكم للأبد؟ 🥺</p>
-        <button class="btn-yes" onclick="done()">أوعدك يا معتصم ❤️</button>
+        <p style="color: #555;">معتصم بيوثق فيكي ثقة عمياء.. ❤️</p>
+        <p style="font-weight:bold; color:#d63384; margin-bottom: 20px;">أوعديه تضلي مخلصة إله ولحبكم للأبد؟ 🥺</p>
+        <button class="btn-promise" onclick="sendToTelegram()">أوعدك يا معتصم ❤️</button>
     </div>
 
     <script>
-        let msgIndex = 0;
-        const messages = [
-            "أهلاً إيلاف! ممكن أسألك سؤال؟ 🤔",
-            "لك شو عاملللله لمعتصم؟ 🙀 من يوم ما عرفك ما عم يعبر حدا!",
-            "لك شو هاد ساحرتيه شي؟ ✨ أنا مصدومة من كمية حبه إلك!",
-            "معتصم بيوثق فيكي ثقة عمياء، وبيتمناكي تضلي جنبه للأبد..",
-            "شوفي هالمفاجأة.. واضغطي عليّ آخر مرة!"
-        ];
+        setInterval(() => {
+            const r = document.createElement('div');
+            r.className = 'rose';
+            r.innerHTML = '🌸';
+            r.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(r);
+            setTimeout(() => r.remove(), 4000);
+        }, 300);
 
-        function chat() {
-            msgIndex++;
-            const bubble = document.getElementById('bubble');
-            const content = document.getElementById('content');
-            const kittyKiss = document.getElementById('kittyKiss');
-            
-            if (msgIndex < messages.length) {
-                bubble.innerText = messages[msgIndex];
-                // حركة تفاعل إضافية عند الكلام
-                document.querySelector('.kitty-character').style.transform = 'scale(1.3) rotate(10deg)';
-                setTimeout(() => {
-                    document.querySelector('.kitty-character').style.transform = 'scale(1) rotate(0deg)';
-                }, 300);
-            } else {
-                bubble.style.display = 'none';
-                content.style.display = 'block';
-                // إظهار كيتي بتبوسها وأنيميشن الإيموت
-                setTimeout(() => {
-                    kittyKiss.style.display = 'block';
-                }, 500);
-            }
-        }
-
-        function done() {
-            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف وعدتك تضل مخلصة وبتحبك! وكيتي باستها! ❤️")}`);
-            alert("أحلى وعد بالدنيا! معتصم هسا طاير من الفرح ❤️");
+        function sendToTelegram() {
+            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("إيلاف وعدتك يا معتصم وكيتي المجسمة شاهدة! 😂❤️")}`);
+            alert("أحلى وعد! وصلت الرسالة لمعتصم ❤️");
         }
     </script>
 </body>
