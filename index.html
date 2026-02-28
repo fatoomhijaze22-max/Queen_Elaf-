@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى إيلاف.. حبي الوحيد ❤️</title>
+    <title>إلى إيلاف.. قلبي ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap');
 
@@ -11,201 +11,116 @@
             font-family: 'Cairo', sans-serif;
             background: #fff5f7;
             margin: 0;
-            overflow: hidden; /* لمنع شريط التمرير بسبب الورد المتساقط */
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        /* أنيميشن تساقط الورد والقلوب */
-        .snowflake {
+        /* تأثير الورد المتساقط */
+        .rose {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #ffb6c1; /* لون وردي فاتح */
-            border-radius: 50%;
-            opacity: 0.8;
+            color: #ffb6c1;
+            font-size: 20px;
+            user-select: none;
+            z-index: 1;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0); }
-            100% { transform: translateY(110vh) translateX(20px); }
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* كيتي المتحركة بفرح (النط والدوران) */
-        .kitty-character {
+        /* كيتي كأنها مجسم 3D متحرك */
+        .kitty-3d {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 130px;
-            z-index: 1000;
+            width: 80px; /* حجم صغير عشان ما تغطي الكلام */
+            z-index: 2000;
+            filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.2)); /* تأثير الظل ليعطي عمق 3D */
+            animation: float3D 3s ease-in-out infinite;
             cursor: pointer;
-            clip-path: inset(5% 15% 10% 15% round 30%); /* قص احترافي */
-            animation: kittyHappy 2s infinite ease-in-out;
-            transition: all 0.5s;
         }
 
-        @keyframes kittyHappy {
-            0%, 100% { transform: scale(1) translateY(0) rotate(0deg); }
-            25% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
-            50% { transform: scale(1.15) translateY(-30px) rotate(-5deg); }
-            75% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateY(0deg) scale(1); }
+            50% { transform: translateY(-20px) rotateY(20deg) scale(1.1); }
         }
 
-        /* فقاعة الكلام */
-        .speech-bubble {
-            position: fixed;
-            bottom: 180px;
-            right: 40px;
-            background: white;
-            padding: 20px;
-            border-radius: 25px;
-            border: 3px solid #ff4d6d;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
-            max-width: 250px;
-            text-align: center;
-            font-weight: bold;
-            color: #d63384;
-            z-index: 1001;
-            display: block;
-            line-height: 1.6;
-        }
-
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: 40px;
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: white transparent transparent;
-        }
-
-        /* كارت المفاجأة النهائي */
-        .main-container {
-            max-width: 500px;
+        .container {
+            max-width: 400px;
             width: 90%;
             background: white;
-            padding: 35px;
-            border-radius: 40px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
             text-align: center;
             border: 2px solid #ffd1dc;
-            display: none;
-            position: relative;
+            z-index: 10;
         }
 
-        /* هالو كيتي وهي بتبوسها (تظهر في النهاية) */
-        .kitty-kiss {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            display: none;
-            animation: kissEmote 1.5s ease-out;
-        }
-
-        @keyframes kissEmote {
-            0% { transform: translateX(-50%) scale(0); opacity: 0; }
-            50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
-            100% { transform: translateX(-50%) scale(1); opacity: 1; }
-        }
-
-        .player-box {
+        .player-card {
             background: #cc0000;
-            border: 6px solid #a00000;
-            border-radius: 20px;
-            margin: 25px 0;
-            overflow: hidden;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 15px 0;
+            border: 4px solid #a00000;
         }
 
-        iframe { width: 100%; height: 90px; border: none; }
+        iframe { width: 100%; height: 80px; border-radius: 10px; border: none; }
 
-        .btn-yes {
-            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+        .btn-love {
+            background: #ff4d6d;
             color: white;
-            padding: 15px 40px;
+            padding: 12px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 1.2em;
+            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            margin-top: 15px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
     <script>
-        for (let i = 0; i < 30; i++) {
-            let flake = document.createElement('div');
-            flake.className = 'snowflake';
-            flake.style.left = Math.random() * 100 + 'vw';
-            flake.style.animationDuration = Math.random() * 3 + 2 + 's'; // سرعات مختلفة
-            flake.style.opacity = Math.random();
-            document.body.appendChild(flake);
+        for (let i = 0; i < 20; i++) {
+            let rose = document.createElement('div');
+            rose.className = 'rose';
+            rose.innerHTML = '🌸';
+            rose.style.left = Math.random() * 100 + 'vw';
+            rose.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            rose.style.delay = Math.random() * 5 + 's';
+            document.body.appendChild(rose);
         }
     </script>
 
-    <div id="bubble" class="speech-bubble">أهلاً إيلاف! ممكن أسألك سؤال؟ 🤔</div>
-    <div class="kitty-character" onclick="chat()">
-        <img src="kitty.jpg" style="width: 100%;" alt="Kitty">
+    <div class="kitty-3d" onclick="alert('إيلاف.. معتصم بيحبك وبيهتم فيكي!')">
+        <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="3D Kitty">
     </div>
 
-    <div class="main-container" id="content">
-        <div class="kitty-kiss" id="kittyKiss">
-            <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="Kitty Kiss">
-        </div>
-
-        <h1 style="color: #ff4d6d; font-family: 'Amiri'; font-size: 2.5em;">إلى إيلاف.. قلبي ❤️</h1>
-        <div class="player-box">
-            <div style="color:white; padding:5px; font-weight:bold;">🎵 محمود التركي - حبيبي هو</div>
+    <div class="container">
+        <h1 style="color: #ff4d6d; font-family: 'Amiri'; margin: 0;">إلى إيلاف.. قلبي ❤️</h1>
+        
+        <div class="player-card">
+            <div style="color:white; font-size: 0.8em; margin-bottom:5px;">🎵 محمود التركي - حبيبي هو</div>
             <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ"></iframe>
         </div>
-        <p style="font-size: 1.2em; color: #555;">معتصم بيحبك وبيوثق فيكي أكثر من أي شي..</p>
-        <p style="font-size: 1.1em; color: #d63384; font-weight: bold;">أوعديه تضلي مخلصة إله ولحبكم للأبد؟ 🥺</p>
-        <button class="btn-yes" onclick="done()">أوعدك يا معتصم ❤️</button>
+
+        <p style="font-size: 0.9em; color: #555;">معتصم بيوثق فيكي أكثر من أي شي في الدنيا..</p>
+        <p style="font-weight: bold; color: #d63384;">أوعديه تضلي مخلصة إله ولحبكم؟ 🥺</p>
+
+        <button class="btn-love" onclick="sendPromise()">أوعدك يا معتصم ❤️</button>
     </div>
 
     <script>
-        let msgIndex = 0;
-        const messages = [
-            "أهلاً إيلاف! ممكن أسألك سؤال؟ 🤔",
-            "لك شو عاملللله لمعتصم؟ 🙀 من يوم ما عرفك ما عم يعبر حدا!",
-            "لك شو هاد ساحرتيه شي؟ ✨ أنا مصدومة من كمية حبه إلك!",
-            "معتصم بيوثق فيكي ثقة عمياء، وبيتمناكي تضلي جنبه للأبد..",
-            "شوفي هالمفاجأة.. واضغطي عليّ آخر مرة!"
-        ];
-
-        function chat() {
-            msgIndex++;
-            const bubble = document.getElementById('bubble');
-            const content = document.getElementById('content');
-            const kittyKiss = document.getElementById('kittyKiss');
-            
-            if (msgIndex < messages.length) {
-                bubble.innerText = messages[msgIndex];
-                // حركة تفاعل إضافية عند الكلام
-                document.querySelector('.kitty-character').style.transform = 'scale(1.3) rotate(10deg)';
-                setTimeout(() => {
-                    document.querySelector('.kitty-character').style.transform = 'scale(1) rotate(0deg)';
-                }, 300);
-            } else {
-                bubble.style.display = 'none';
-                content.style.display = 'block';
-                // إظهار كيتي بتبوسها وأنيميشن الإيموت
-                setTimeout(() => {
-                    kittyKiss.style.display = 'block';
-                }, 500);
-            }
-        }
-
-        function done() {
-            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف وعدتك تضل مخلصة وبتحبك! وكيتي باستها! ❤️")}`);
-            alert("أحلى وعد بالدنيا! معتصم هسا طاير من الفرح ❤️");
+        function sendPromise() {
+            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف شافت الموقع ووعدتك تضل مخلصة! ❤️")}`);
+            alert("أحلى وعد بالدنيا! وصلت الرسالة لمعتصم ❤️");
         }
     </script>
 </body>
