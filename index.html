@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى تغريد.. اعتذار وحب ❤️</title>
+    <title>إلى تغريدتي... حبي الوحيد ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap');
 
@@ -11,7 +11,7 @@
             font-family: 'Cairo', sans-serif;
             background: #fff5f7;
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* لمنع شريط التمرير بسبب الورد المتساقط */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -24,7 +24,7 @@
             position: absolute;
             width: 15px;
             height: 15px;
-            background: #ffb6c1;
+            background: #ffb6c1; /* لون وردي فاتح */
             border-radius: 50%;
             opacity: 0.8;
             animation: fall linear infinite;
@@ -35,7 +35,7 @@
             100% { transform: translateY(110vh) translateX(20px); }
         }
 
-        /* كيتي المجسمة الأصلية رجعت! */
+        /* كيتي المتحركة بفرح (النط والدوران) */
         .kitty-character {
             position: fixed;
             bottom: 20px;
@@ -43,14 +43,16 @@
             width: 130px;
             z-index: 1000;
             cursor: pointer;
+            clip-path: inset(5% 15% 10% 15% round 30%); /* قص احترافي */
             animation: kittyHappy 2s infinite ease-in-out;
             transition: all 0.5s;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
         }
 
         @keyframes kittyHappy {
             0%, 100% { transform: scale(1) translateY(0) rotate(0deg); }
+            25% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
             50% { transform: scale(1.15) translateY(-30px) rotate(-5deg); }
+            75% { transform: scale(1.1) translateY(-20px) rotate(5deg); }
         }
 
         /* فقاعة الكلام */
@@ -68,17 +70,21 @@
             font-weight: bold;
             color: #d63384;
             z-index: 1001;
+            display: block;
             line-height: 1.6;
         }
 
         .speech-bubble::after {
             content: '';
-            position: absolute; bottom: -15px; right: 40px;
-            border-width: 15px 15px 0; border-style: solid;
+            position: absolute;
+            bottom: -15px;
+            right: 40px;
+            border-width: 15px 15px 0;
+            border-style: solid;
             border-color: white transparent transparent;
         }
 
-        /* كارت الصلح النهائي */
+        /* كارت المفاجأة النهائي */
         .main-container {
             max-width: 500px;
             width: 90%;
@@ -92,28 +98,41 @@
             position: relative;
         }
 
+        /* هالو كيتي وهي بتبوسها (تظهر في النهاية) */
         .kitty-kiss {
-            position: absolute; top: -60px; left: 50%;
-            transform: translateX(-50%); width: 100px;
-            display: none; animation: kissEmote 1.5s ease-out;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            display: none;
+            animation: kissEmote 1.5s ease-out;
         }
 
         @keyframes kissEmote {
             0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
             100% { transform: translateX(-50%) scale(1); opacity: 1; }
         }
 
         .player-box {
-            background: #cc0000; border: 6px solid #a00000;
-            border-radius: 20px; margin: 25px 0; overflow: hidden;
+            background: #cc0000;
+            border: 6px solid #a00000;
+            border-radius: 20px;
+            margin: 25px 0;
+            overflow: hidden;
         }
 
         iframe { width: 100%; height: 90px; border: none; }
 
         .btn-yes {
             background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
-            color: white; padding: 15px 40px; border: none;
-            border-radius: 50px; font-size: 1.2em; cursor: pointer;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
     </style>
@@ -125,14 +144,15 @@
             let flake = document.createElement('div');
             flake.className = 'snowflake';
             flake.style.left = Math.random() * 100 + 'vw';
-            flake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            flake.style.animationDuration = Math.random() * 3 + 2 + 's'; // سرعات مختلفة
+            flake.style.opacity = Math.random();
             document.body.appendChild(flake);
         }
     </script>
 
-    <div id="bubble" class="speech-bubble">أهلاً تغريد! ممكن أحكي معك شوي؟ 🥺</div>
+    <div id="bubble" class="speech-bubble">أهلاً إيلاف! ممكن أسألك سؤال؟ 🤔</div>
     <div class="kitty-character" onclick="chat()">
-        <img src="https://i.ibb.co/3ykpY6v9/1000101754.png" style="width: 100%;" alt="3D Kitty Icon">
+        <img src="kitty.jpg" style="width: 100%;" alt="Kitty">
     </div>
 
     <div class="main-container" id="content">
@@ -140,27 +160,25 @@
             <img src="https://media.tenor.com/g9f5z3k0s6AAAAAC/hello-kitty-kiss.gif" style="width: 100%;" alt="Kitty Kiss">
         </div>
 
-        <h1 style="color: #ff4d6d; font-family: 'Amiri'; font-size: 2.2em;">إلى تغريد.. قلبي ❤️</h1>
-        <p style="font-style: italic; color: #ff4d6d; font-family: 'Amiri'; font-size: 1.3em; margin: 10px 0;">"أعاتب قلبي إن زاد فيكي نبضه.."</p>
-        
+        <h1 style="color: #ff4d6d; font-family: 'Amiri'; font-size: 2.5em;">إلى إيلاف.. قلبي ❤️</h1>
         <div class="player-box">
             <div style="color:white; padding:5px; font-weight:bold;">🎵 محمود التركي - حبيبي هو</div>
             <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ"></iframe>
         </div>
-        
-        <p style="font-size: 1.1em; color: #555;">معتصم بيعرف إنه الزعل ما بيليق فيكي.. ❤️</p>
-        <p style="font-size: 1.1em; color: #d63384; font-weight: bold;">بتسامحيه ونرجع أحسن من الأول؟ 🥺</p>
-        <button class="btn-yes" onclick="done()">سامحتك يا معتصم ❤️</button>
+        <p style="font-size: 1.2em; color: #555;">معتصم بيحبك وبيوثق فيكي أكثر من أي شي..</p>
+        <p style="font-size: 1.1em; color: #d63384; font-weight: bold;">أوعديه تضلي مخلصة إله ولحبكم للأبد؟ 🥺</p>
+        <button class="btn-yes" onclick="done()">أوعدك يا معتصم ❤️</button>
     </div>
 
     <script>
         let msgIndex = 0;
         const messages = [
-            "أهلاً تغريد! ممكن أحكي معك شوي؟ 🥺",
-            "معتصم قلبه واجعه وما بيتحمل زعلك.. 😿",
-            "إنتي بتعرفي إنك غالية كتير، والصلح سيد الأحكام!",
-            "أعاتب قلبي إن زاد فيكي نبضه.. شوفي شو محضرلك..",
-            "اضغطي عليّ آخر مرة وخلينا نصالح بعض! ✨"
+            "أهلاً تغريدوو! ممكن أسألك سؤال؟ 🤔",
+            "لك شو عاملللله لمعتصم؟ 🙀 من يوم ما عرفك ما عم يعبر حدا!",
+            "لك شو هاد ساحرتيه شي؟ ✨ أنا مصدومة من كمية حبه إلك!",
+            "معتصم بيوثق فيكي ثقة عمياء، وبيتمناكي تضلي جنبه للأبد..",
+            "بتمنى تسامحيه حرام والله مسكين..",
+            "شوفي هالمفاجأة.. واضغطي عليّ آخر مرة!"
         ];
 
         function chat() {
@@ -171,17 +189,26 @@
             
             if (msgIndex < messages.length) {
                 bubble.innerText = messages[msgIndex];
+                // حركة تفاعل إضافية عند الكلام
+                document.querySelector('.kitty-character').style.transform = 'scale(1.3) rotate(10deg)';
+                setTimeout(() => {
+                    document.querySelector('.kitty-character').style.transform = 'scale(1) rotate(0deg)';
+                }, 300);
             } else {
                 bubble.style.display = 'none';
                 content.style.display = 'block';
-                setTimeout(() => { kittyKiss.style.display = 'block'; }, 500);
+                // إظهار كيتي بتبوسها وأنيميشن الإيموت
+                setTimeout(() => {
+                    kittyKiss.style.display = 'block';
+                }, 500);
             }
         }
 
         function done() {
-            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 تغريد سامحتك يا معتصم! الصلح تم وكيتي المجسمة شاهدة! ❤️")}`);
-            alert("أحلى خبر! معتصم هسا طاير من الفرح ❤️");
+            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 إيلاف وعدتك تضل مخلصة وبتحبك! وكيتي باستها! ❤️")}`);
+            alert("أحلى وعد بالدنيا! معتصم هسا طاير من الفرح ❤️");
         }
     </script>
 </body>
 </html>
+
