@@ -1,127 +1,166 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مفاجأة لطيفة 💗</title>
+<title>Hello Kitty</title>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:url("104be3a230ca00148c8b279c1395edcc.jpg") repeat;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
 }
 
-.youtube{
-  width:100%;
-  max-width:1px;
-  height:1px;
-  overflow:hidden;
+/* الخلفية */
+#scene{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
 }
 
-.scene{
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.bubble{
-  background:white;
-  padding:12px 16px;
-  border-radius:20px;
-  max-width:260px;
-  text-align:center;
-  font-size:16px;
-  margin-bottom:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,.15);
-}
-
+/* هالو كيتي */
 #kitty{
-  width:200px;
-  animation: float 2.5s ease-in-out infinite;
+    position:absolute;
+    width:130px;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    transition:all 1.2s ease;
+    animation:bounce 1.2s infinite alternate;
+    cursor:pointer;
 }
 
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-  100%{transform:translateY(0)}
+/* حركة لطيفة */
+@keyframes bounce{
+    from{ transform:translateY(0) translateX(-50%); }
+    to{ transform:translateY(-12px) translateX(-50%); }
 }
 
-.heart{
-  position:absolute;
-  font-size:24px;
-  animation:fly 2s linear forwards;
+/* فقاعة الكلام */
+#bubble{
+    position:absolute;
+    bottom:150px;
+    left:50%;
+    transform:translateX(-50%);
+    background:white;
+    padding:10px 15px;
+    border-radius:15px;
+    font-size:15px;
+    display:none;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    max-width:220px;
+    text-align:center;
 }
 
-@keyframes fly{
-  from{transform:translateY(0); opacity:1;}
-  to{transform:translateY(-120px); opacity:0;}
+/* لمسة */
+#hint{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    color:white;
+    font-size:14px;
+    opacity:.8;
 }
 </style>
 </head>
 
 <body>
 
-<!-- الأغنية من اليوتيوب -->
-<div class="youtube">
-<iframe id="song" src="https://www.youtube.com/embed/xHMd2LLNYn8?si=JeM-R2eg9_PFuXsCEI2oxQd95z4.mp3&autoplay=1&rel=0&loop=1&playlist=xHMd2LLNYn8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+<div id="scene">
 
-<div class="scene">
-<div id="bubble" class="bubble">
-استمتعي بالمفاجأة 💝
-</div>
+    <div id="bubble">💌</div>
 
-<img id="kitty" src="kitty.png">
+    <img id="kitty" src="kitty.png">
+
+    <div id="hint">المس هالو كيتي ✨</div>
+
+    <audio id="song" src="EI2oxQd95z4.mp3"></audio>
 
 </div>
 
 <script>
-const texts = [
-"مرحبا يا أحلى بنت بالدنيا 💕",
-"بعرف إنك قوية حتى لو تعبتي",
-"وجودك بالدنيا فرق كبير 🌸",
-"اسمعي هالكلمات الك...",
-"يا زهرة العمر يا ضحكة نهاري\nفي صوتك الأمان وفي قلبك داري 💗",
-"موووواه 💋"
+const kitty = document.getElementById("kitty");
+const bubble = document.getElementById("bubble");
+const song = document.getElementById("song");
+
+let started = false;
+
+/* أماكن عشوائية */
+function moveKittyRandom(){
+    const maxX = window.innerWidth - 140;
+    const maxY = window.innerHeight - 160;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    kitty.style.left = x + "px";
+    kitty.style.top  = y + "px";
+}
+
+/* رسائل لطيفة */
+const messages = [
+    "أنتِ أجمل شي اليوم 💖",
+    "ابتسامتك بتجنن 🌸",
+    "أنا مبسوطة فيك 🥰",
+    "لا تزعلـي أبداً ✨",
+    "هاي بوسة إلك 😘"
 ];
 
-let i = 0;
+let msgIndex = 0;
 
-function showNext(){
-  const bubble = document.getElementById("bubble");
-  bubble.innerText = texts[i];
+function showMessage(){
+    bubble.innerText = messages[msgIndex];
+    bubble.style.display="block";
 
-  if(texts[i].includes("موووواه")){
-    kissEffect();
-  }
+    const kRect = kitty.getBoundingClientRect();
 
-  i++;
+    bubble.style.left = (kRect.left + kRect.width/2) + "px";
+    bubble.style.top  = (kRect.top - 50) + "px";
 
-  if(i < texts.length){
-    setTimeout(showNext, 3000);
-  }
+    msgIndex++;
+
+    if(msgIndex >= messages.length){
+        setTimeout(()=>{
+            bubble.innerText="🎵 شغلت الأغنية إلك";
+            song.play().catch(()=>{});
+        },700);
+    }
 }
 
-window.onload = () => {
-  showNext();
-};
+/* بداية العرض */
+function startShow(){
+    if(started) return;
+    started = true;
 
-function kissEffect(){
-  for(let j=0;j<6;j++){
-    const h = document.createElement("div");
-    h.className="heart";
-    h.innerText="💗";
-    h.style.left = (window.innerWidth/2 + (Math.random()*80-40))+"px";
-    h.style.top = "420px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),2000);
-  }
+    document.getElementById("hint").style.display="none";
+
+    moveKittyRandom();
+    showMessage();
+
+    let moveCount = 0;
+
+    const mover = setInterval(()=>{
+        moveKittyRandom();
+        showMessage();
+        moveCount++;
+
+        if(moveCount >= 6){
+            clearInterval(mover);
+        }
+
+    },1400);
 }
+
+/* أول لمسة مطلوبة لتشغيل الصوت */
+kitty.addEventListener("click",startShow);
+kitty.addEventListener("touchstart",startShow);
+
 </script>
 
 </body>
