@@ -6,188 +6,184 @@
 
 <style>
 html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial;
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial;
 }
 
 #scene{
-    position:relative;
-    width:100%;
-    height:100%;
-    background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
+  position:relative;
+  width:100%;
+  height:100%;
+  background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
 }
 
-/* هالو كيتي */
+/* هالو كيتي – كبيرة */
 #kitty{
-    position:absolute;
-    width:230px;
-    left:50%;
-    bottom:20px;
-    transform:translateX(-50%);
-    transition:left 1.2s ease, top 1.2s ease;
-    cursor:pointer;
-    animation:idle 2.5s infinite ease-in-out;
+  position:absolute;
+  width:300px;   /* كبيرة */
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+  cursor:pointer;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));
+  animation:softIdle 3.5s ease-in-out infinite;
+  transition:top 2s cubic-bezier(.25,.8,.25,1),
+             left 2s cubic-bezier(.25,.8,.25,1);
 }
 
-@keyframes idle{
-    0%{transform:translateX(-50%) scale(1);}
-    50%{transform:translateX(-50%) scale(1.05);}
-    100%{transform:translateX(-50%) scale(1);}
+/* حركة ناعمة (أنوثية) */
+@keyframes softIdle{
+  0%{ transform:translateX(-50%) scale(1) rotate(0deg); }
+  25%{ transform:translateX(-50%) scale(1.02) rotate(1.5deg); }
+  50%{ transform:translateX(-50%) scale(1.03) rotate(0deg); }
+  75%{ transform:translateX(-50%) scale(1.02) rotate(-1.5deg); }
+  100%{ transform:translateX(-50%) scale(1) rotate(0deg); }
 }
 
 /* بوسة */
 .kiss{
-    animation:kiss 0.9s ease;
+  animation:kiss 1s ease;
 }
 
 @keyframes kiss{
-    0%{transform:translateX(-50%) scale(1);}
-    50%{transform:translateX(-50%) scale(1.15);}
-    100%{transform:translateX(-50%) scale(1);}
+  0%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.15);}
+  100%{transform:translateX(-50%) scale(1);}
 }
 
-/* حركة سناب 🫰 */
+/* سناب 🫰 */
 .snap{
-    animation:snap 0.6s ease;
+  animation:snap 0.6s ease;
 }
 
 @keyframes snap{
-    0%{transform:translateX(-50%) rotate(0deg);}
-    25%{transform:translateX(-50%) rotate(10deg);}
-    50%{transform:translateX(-50%) rotate(-10deg);}
-    100%{transform:translateX(-50%) rotate(0deg);}
+  0%{transform:translateX(-50%) rotate(0deg);}
+  25%{transform:translateX(-50%) rotate(8deg);}
+  50%{transform:translateX(-50%) rotate(-8deg);}
+  100%{transform:translateX(-50%) rotate(0deg);}
 }
 
-/* فقاعة الكلام */
+/* فقاعة */
 #bubble{
-    position:absolute;
-    background:white;
-    padding:12px 16px;
-    border-radius:20px;
-    font-size:16px;
-    display:none;
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
-    white-space:nowrap;
+  position:absolute;
+  background:white;
+  padding:14px 18px;
+  border-radius:20px;
+  font-size:17px;
+  display:none;
+  box-shadow:0 6px 15px rgba(0,0,0,.25);
 }
 
 #hint{
-    position:absolute;
-    bottom:12px;
-    width:100%;
-    text-align:center;
-    color:white;
-    font-size:14px;
-    text-shadow:0 2px 5px rgba(0,0,0,.6);
+  position:absolute;
+  bottom:12px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:15px;
+  text-shadow:0 2px 6px rgba(0,0,0,.6);
 }
-
 </style>
 </head>
 <body>
 
 <div id="scene">
 
-    <div id="bubble"></div>
+  <div id="bubble"></div>
 
-    <img id="kitty" src="kitty.png">
+  <img id="kitty" src="kitty.png">
 
-    <div id="hint">إلمس هالو كيتي 🌸</div>
+  <div id="hint">المسي هالو كيتي ✨</div>
 
-    <audio id="song" src="EI2oxQd95z4.mp3"></audio>
+  <audio id="song" src="EI2oxQd95z4.mp3"></audio>
 
 </div>
 
 <script>
 
-const kitty = document.getElementById("kitty");
+const kitty  = document.getElementById("kitty");
 const bubble = document.getElementById("bubble");
 const song   = document.getElementById("song");
 
-const messages = [
-    "هاي بوسة إلك 😘",
-    "اسمعي… 🫰",
-    "أنتِ كتير لطيفة 💖",
-    "لا تزعلـي أبداً 🌸",
-    "هسه شغّلت الأغنية 🎵"
+let started=false;
+let step=0;
+
+const texts=[
+  "هاي بوسة إلك 😘",
+  "اسمعي 🫰",
+  "وجودك كثير لطيف 💗",
+  "لا تزعلـي أبداً ✨",
+  "شغّلت الأغنية إلك 🎵"
 ];
 
-let step = 0;
-let started = false;
+function moveSoft(){
+  const w = window.innerWidth  - 320;
+  const h = window.innerHeight - 360;
 
-function moveKitty(){
-    const maxX = window.innerWidth  - 240;
-    const maxY = window.innerHeight - 260;
+  const x = Math.random()*w;
+  const y = Math.random()*h;
 
-    const x = Math.random()*maxX;
-    const y = Math.random()*maxY;
-
-    kitty.style.left = x+"px";
-    kitty.style.top  = y+"px";
+  kitty.style.left = x+"px";
+  kitty.style.top  = y+"px";
 }
 
-function showBubble(text){
-    bubble.innerText = text;
-    bubble.style.display="block";
+function showBubble(t){
+  bubble.innerText=t;
+  bubble.style.display="block";
 
-    const r = kitty.getBoundingClientRect();
-    bubble.style.left = (r.left + r.width/2)+"px";
-    bubble.style.top  = (r.top - 45)+"px";
-    bubble.style.transform="translateX(-50%)";
+  const r=kitty.getBoundingClientRect();
+  bubble.style.left=(r.left+r.width/2)+"px";
+  bubble.style.top=(r.top-50)+"px";
+  bubble.style.transform="translateX(-50%)";
 }
 
 function doKiss(){
-    kitty.classList.remove("snap");
-    kitty.classList.add("kiss");
-    setTimeout(()=>kitty.classList.remove("kiss"),900);
+  kitty.classList.remove("snap");
+  kitty.classList.add("kiss");
+  setTimeout(()=>kitty.classList.remove("kiss"),1000);
 }
 
 function doSnap(){
-    kitty.classList.remove("kiss");
-    kitty.classList.add("snap");
-    setTimeout(()=>kitty.classList.remove("snap"),600);
+  kitty.classList.remove("kiss");
+  kitty.classList.add("snap");
+  setTimeout(()=>kitty.classList.remove("snap"),600);
 }
 
 function startShow(){
+  if(started) return;
+  started=true;
 
-    if(started) return;
-    started = true;
+  document.getElementById("hint").style.display="none";
 
-    document.getElementById("hint").style.display="none";
+  moveSoft();
+  showBubble(texts[0]);
+  doKiss();
 
-    moveKitty();
-    showBubble(messages[0]);
-    doKiss();
+  const timer=setInterval(()=>{
 
-    let timer = setInterval(()=>{
+    step++;
+    moveSoft();
 
-        step++;
+    if(step===1){
+      showBubble(texts[1]);
+      doSnap();
+    }else if(step===2){
+      showBubble(texts[2]);
+    }else if(step===3){
+      showBubble(texts[3]);
+    }else if(step===4){
+      showBubble(texts[4]);
+      song.play().catch(()=>{});
+    }else{
+      clearInterval(timer);
+    }
 
-        moveKitty();
-
-        if(step === 1){
-            showBubble(messages[1]);
-            doSnap();
-        }
-        else if(step === 2){
-            showBubble(messages[2]);
-        }
-        else if(step === 3){
-            showBubble(messages[3]);
-        }
-        else if(step === 4){
-            showBubble(messages[4]);
-            song.play().catch(()=>{});
-        }
-        else{
-            clearInterval(timer);
-        }
-
-    },1500);
+  },2200);
 }
 
-/* أول لمسة */
 kitty.addEventListener("click",startShow);
 kitty.addEventListener("touchstart",startShow);
 
