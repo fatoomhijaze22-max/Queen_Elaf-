@@ -34,7 +34,6 @@ html,body{
   z-index:5;
 }
 
-/* حركة ناعمة */
 @keyframes softIdle{
   0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
   25%{transform:translate(-50%,-50%) rotate(1.2deg) scale(1.02);}
@@ -47,17 +46,19 @@ html,body{
 #bubble{
   position:absolute;
   background:white;
-  padding:18px 24px;
+  padding:18px 26px;
   border-radius:35px;
   font-size:20px;
   display:none;
   box-shadow:0 8px 20px rgba(0,0,0,.25);
   z-index:10;
-  max-width:80%;
+  max-width:75%;
   text-align:center;
+  line-height:1.7;
+  letter-spacing:1px;
 }
 
-/* ورود + قلوب + لمعات */
+/* مؤثرات */
 .fx{
   position:absolute;
   pointer-events:none;
@@ -71,14 +72,22 @@ html,body{
   to{transform:translateY(260px);opacity:0;}
 }
 
-/* رقصة */
-.dance{
-  animation:dance 0.35s infinite alternate !important;
-}
+/* وضعيات الرقص */
+.pose1{animation:pose1 .6s infinite alternate!important;}
+.pose2{animation:pose2 .6s infinite alternate!important;}
+.pose3{animation:pose3 .6s infinite alternate!important;}
 
-@keyframes dance{
-  from{transform:translate(-50%,-50%) rotate(-7deg) scale(1.05);}
-  to{transform:translate(-50%,-50%) rotate(7deg) scale(1.05);}
+@keyframes pose1{
+  from{transform:translate(-50%,-50%) rotate(-6deg) scale(1.05);}
+  to{transform:translate(-50%,-50%) rotate(6deg) scale(1.05);}
+}
+@keyframes pose2{
+  from{transform:translate(-50%,-50%) rotate(0deg) scale(1.08);}
+  to{transform:translate(-50%,-50%) rotate(0deg) scale(.98);}
+}
+@keyframes pose3{
+  from{transform:translate(-50%,-50%) rotate(4deg) scale(1.03);}
+  to{transform:translate(-50%,-50%) rotate(-4deg) scale(1.03);}
 }
 
 #hint{
@@ -98,11 +107,8 @@ html,body{
 <div id="scene">
 
   <div id="bubble"></div>
-
   <img id="kitty" src="kitty.png">
-
   <div id="hint">إلمسي هالو كيتي 🌸</div>
-
   <audio id="song" src="EI2oxQd95z4.mp3"></audio>
 
 </div>
@@ -116,30 +122,31 @@ const hint   = document.getElementById("hint");
 let started=false;
 let step=0;
 let typingTimer=null;
-let smallMoveTimer=null;
+let moveTimer=null;
 let fxTimer=null;
+let poseTimer=null;
 
 const texts=[
   "مرحبا يا حلوة 💗",
-  "حبيت أجي أطمن عليك اليوم 🌸",
-  "ابتسامتك بتفرق كثير ✨",
-  "لا تزعلـي مهما صار 💖",
-  "أنا معك ولو من بعيد 🌷"
+  "جيت أطمن عليك وأقولك إنك غالية 🌸",
+  "لا تخلي شي يكسّر خاطرك ✨",
+  "الدنيا لسه فيها أشياء حلوة كثير 💖",
+  "أنا بتمنى تبتسمي دايمًا 🌷"
 ];
 
-/* تحريك داخل مدى صغير فقط */
+/* تحرك فقط بمدى صغير */
 function moveSmall(){
-  const cx = window.innerWidth  / 2;
-  const cy = window.innerHeight / 2;
+  const cx = window.innerWidth/2;
+  const cy = window.innerHeight/2;
 
   const rangeX = 90;
   const rangeY = 70;
 
-  const x = cx + (Math.random()*rangeX*2 - rangeX);
-  const y = cy + (Math.random()*rangeY*2 - rangeY);
+  const x = cx + (Math.random()*rangeX*2-rangeX);
+  const y = cy + (Math.random()*rangeY*2-rangeY);
 
-  kitty.style.left = x + "px";
-  kitty.style.top  = y + "px";
+  kitty.style.left = x+"px";
+  kitty.style.top  = y+"px";
 }
 
 /* كتابة ناعمة */
@@ -150,46 +157,65 @@ function typeText(text){
   bubble.style.display="block";
   bubble.innerText="";
 
-  const r = kitty.getBoundingClientRect();
-  bubble.style.left = (r.left + r.width/2) + "px";
-  bubble.style.top  = (r.top - 90) + "px";
+  const r=kitty.getBoundingClientRect();
+  bubble.style.left=(r.left+r.width/2)+"px";
+  bubble.style.top =(r.top-95)+"px";
   bubble.style.transform="translateX(-50%)";
 
   let i=0;
-  typingTimer = setInterval(()=>{
-    bubble.innerText += text[i];
+  typingTimer=setInterval(()=>{
+    bubble.innerText+=text[i];
     i++;
-    if(i >= text.length){
+    if(i>=text.length){
       clearInterval(typingTimer);
       typingTimer=null;
     }
   },45);
 }
 
-/* مؤثرات كيوت دايمًا */
+/* مؤثرات مستمرة */
 function startFX(){
-  fxTimer = setInterval(()=>{
+  fxTimer=setInterval(()=>{
     const el=document.createElement("div");
     el.className="fx";
     const arr=["🌸","💖","✨","🌷"];
-    el.innerText = arr[Math.floor(Math.random()*arr.length)];
-    el.style.left = Math.random()*window.innerWidth+"px";
-    el.style.top  = "-20px";
+    el.innerText=arr[Math.floor(Math.random()*arr.length)];
+    el.style.left=Math.random()*window.innerWidth+"px";
+    el.style.top="-20px";
     document.body.appendChild(el);
     setTimeout(()=>el.remove(),3500);
   },450);
 }
 
-/* حركة بطيئة لطيفة أثناء الرقص */
-function slowDanceMove(){
-  smallMoveTimer = setInterval(()=>{
+/* وضعيات الرقص */
+function startPoses(){
+
+  const poses=["pose1","pose2","pose3"];
+  let i=0;
+
+  poseTimer=setInterval(()=>{
+    kitty.classList.remove("pose1","pose2","pose3");
+    kitty.classList.add(poses[i]);
+    i++;
+    if(i>=poses.length) i=0;
+  },700);
+}
+
+/* حركة بطيئة أثناء الرقص */
+function startSmallDanceMove(){
+  moveTimer=setInterval(()=>{
     moveSmall();
   },1800);
 }
 
 /* نهاية الأغنية */
 song.addEventListener("ended",()=>{
-  kitty.classList.remove("dance");
+
+  clearInterval(poseTimer);
+  clearInterval(moveTimer);
+
+  kitty.classList.remove("pose1","pose2","pose3");
+
   typeText("بدي أودعك… وبوصيكي تديري بالك ع عصومي 💗");
 });
 
@@ -209,16 +235,17 @@ function startShow(){
     step++;
     moveSmall();
 
-    if(step < texts.length){
+    if(step<texts.length){
       typeText(texts[step]);
     }
 
-    if(step === texts.length){
+    if(step===texts.length){
+
       clearInterval(talkTimer);
 
       song.play().catch(()=>{});
-      kitty.classList.add("dance");
-      slowDanceMove();
+      startPoses();
+      startSmallDanceMove();
     }
 
   },3200);
