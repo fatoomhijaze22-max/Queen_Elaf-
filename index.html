@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Hello Kitty</title>
+<title>هالو كيتي لعصومي 💖</title>
 
 <style>
 html,body{
@@ -10,14 +10,15 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  font-family:Arial;
+  font-family:Arial, sans-serif;
 }
 
+/* الخلفية الجديدة */
 #scene{
   width:100%;
   height:100%;
   position:relative;
-  background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
+  background:url("IMG_20260303_145837_547.jpg") center/cover no-repeat;
 }
 
 /* هالو كيتي */
@@ -34,6 +35,7 @@ html,body{
   z-index:5;
 }
 
+/* حركة هالو كيتي ناعمة */
 @keyframes softIdle{
   0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
   25%{transform:translate(-50%,-50%) rotate(1.2deg) scale(1.02);}
@@ -42,36 +44,30 @@ html,body{
   100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
 }
 
-
-  #bubble{
+/* بالون الكلام مع تباعد كبير جدًا */
+#bubble{
   position:absolute;
   background:white;
-
-  padding:22px 28px;      /* مسافة داخلية أكبر */
+  padding:26px 32px;
   border-radius:35px;
-
-  font-size:22px;        /* حجم أوضح */
-  line-height:2;         /* تباعد السطور */
-  letter-spacing:1.5px; /* تباعد الحروف */
-
+  font-size:24px;
+  line-height:2.5;       /* تباعد كبير جدًا بين السطور */
+  letter-spacing:2px;    /* تباعد كبير بين الحروف */
+  word-spacing:6px;      /* تباعد كبير بين الكلمات */
+  white-space:normal;
   display:none;
-
   box-shadow:0 8px 20px rgba(0,0,0,.25);
   z-index:10;
-
   max-width:80%;
   text-align:center;
+}
 
-  word-spacing:4px;      /* تباعد الكلمات */
-  white-space:normal;   /* يمنع تكديس النص */
-  }
-  
-/* مؤثرات */
+/* مؤثرات ورد وكيوت */
 .fx{
   position:absolute;
   pointer-events:none;
   animation:fall 3.5s linear forwards;
-  font-size:26px;
+  font-size:28px;
   z-index:3;
 }
 
@@ -134,6 +130,7 @@ let moveTimer=null;
 let fxTimer=null;
 let poseTimer=null;
 
+/* النصوص */
 const texts=[
   "مرحبا يا حلوة 💗",
   "جيت أطمن عليك وأقولك إنك غالية 🌸",
@@ -146,20 +143,16 @@ const texts=[
 function moveSmall(){
   const cx = window.innerWidth/2;
   const cy = window.innerHeight/2;
-
   const rangeX = 90;
   const rangeY = 70;
-
   const x = cx + (Math.random()*rangeX*2-rangeX);
   const y = cy + (Math.random()*rangeY*2-rangeY);
-
   kitty.style.left = x+"px";
   kitty.style.top  = y+"px";
 }
 
 /* كتابة ناعمة */
 function typeText(text){
-
   if(typingTimer) clearInterval(typingTimer);
 
   bubble.style.display="block";
@@ -197,10 +190,8 @@ function startFX(){
 
 /* وضعيات الرقص */
 function startPoses(){
-
   const poses=["pose1","pose2","pose3"];
   let i=0;
-
   poseTimer=setInterval(()=>{
     kitty.classList.remove("pose1","pose2","pose3");
     kitty.classList.add(poses[i]);
@@ -218,44 +209,33 @@ function startSmallDanceMove(){
 
 /* نهاية الأغنية */
 song.addEventListener("ended",()=>{
-
   clearInterval(poseTimer);
   clearInterval(moveTimer);
-
   kitty.classList.remove("pose1","pose2","pose3");
-
   typeText("بدي أودعك… وبوصيكي تديري بالك ع عصومي 💗");
 });
 
 /* البداية */
 function startShow(){
-
   if(started) return;
   started=true;
   hint.style.display="none";
-
   startFX();
   moveSmall();
   typeText(texts[0]);
 
   const talkTimer=setInterval(()=>{
-
     step++;
     moveSmall();
-
     if(step<texts.length){
       typeText(texts[step]);
     }
-
     if(step===texts.length){
-
       clearInterval(talkTimer);
-
       song.play().catch(()=>{});
       startPoses();
       startSmallDanceMove();
     }
-
   },3200);
 }
 
@@ -266,4 +246,3 @@ kitty.addEventListener("touchstart",startShow);
 
 </body>
 </html>
-
