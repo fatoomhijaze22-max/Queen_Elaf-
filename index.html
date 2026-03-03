@@ -42,22 +42,30 @@ html,body{
   100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
 }
 
-/* بالون الكلام */
-#bubble{
+
+  #bubble{
   position:absolute;
   background:white;
-  padding:18px 26px;
+
+  padding:22px 28px;      /* مسافة داخلية أكبر */
   border-radius:35px;
-  font-size:20px;
+
+  font-size:22px;        /* حجم أوضح */
+  line-height:2;         /* تباعد السطور */
+  letter-spacing:1.5px; /* تباعد الحروف */
+
   display:none;
+
   box-shadow:0 8px 20px rgba(0,0,0,.25);
   z-index:10;
-  max-width:75%;
-  text-align:center;
-  line-height:1.7;
-  letter-spacing:1px;
-}
 
+  max-width:80%;
+  text-align:center;
+
+  word-spacing:4px;      /* تباعد الكلمات */
+  white-space:normal;   /* يمنع تكديس النص */
+  }
+  
 /* مؤثرات */
 .fx{
   position:absolute;
@@ -258,3 +266,4 @@ kitty.addEventListener("touchstart",startShow);
 
 </body>
 </html>
+
