@@ -1,256 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>الى سوسو 💖</title>
-
+<title>TM Heart</title>
 <style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:Arial, sans-serif;
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:black;
 }
 
-/* الخلفية الجديدة */
-#scene{
-  width:100%;
-  height:100%;
-  position:relative;
-  background:url("IMG_20260303_145837_547.jpg") center/cover no-repeat;
+.heart{
+width:150px;
+height:150px;
+background:red;
+position:relative;
+transform:rotate(-45deg);
+animation:beat 1s infinite;
 }
 
-/* هالو كيتي */
-#kitty{
-  position:absolute;
-  width:520px;
-  left:50%;
-  top:55%;
-  transform:translate(-50%,-50%);
-  filter:drop-shadow(0 15px 25px rgba(0,0,0,.3));
-  animation:softIdle 4s infinite ease-in-out;
-  transition:left 2.2s ease, top 2.2s ease;
-  cursor:pointer;
-  z-index:5;
+.heart:before,
+.heart:after{
+content:"";
+width:150px;
+height:150px;
+background:red;
+border-radius:50%;
+position:absolute;
 }
 
-/* حركة هالو كيتي ناعمة */
-@keyframes softIdle{
-  0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
-  25%{transform:translate(-50%,-50%) rotate(1.2deg) scale(1.02);}
-  50%{transform:translate(-50%,-50%) rotate(0deg) scale(1.04);}
-  75%{transform:translate(-50%,-50%) rotate(-1.2deg) scale(1.02);}
-  100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+.heart:before{
+top:-75px;
+left:0;
 }
 
-/* بالون الكلام مع مسافات كبيرة جدًا */
-#bubble{
-  position:absolute;
-  background:white;
-  padding:26px 32px;
-  border-radius:35px;
-  font-size:24px;
-
-  line-height:3;        /* تباعد كبير بين السطور */
-  letter-spacing:2.5px; /* تباعد كبير بين الحروف */
-  word-spacing:8px;     /* تباعد كبير بين الكلمات */
-  white-space:pre-wrap; /* يحافظ على كسور الأسطر */
-
-  display:none;
-  box-shadow:0 8px 20px rgba(0,0,0,.25);
-  z-index:10;
-  max-width:80%;
-  text-align:center;
+.heart:after{
+left:75px;
+top:0;
 }
 
-/* مؤثرات ورد وكيوت */
-.fx{
-  position:absolute;
-  pointer-events:none;
-  animation:fall 3.5s linear forwards;
-  font-size:28px;
-  z-index:3;
+.text{
+position:absolute;
+color:white;
+font-size:30px;
+transform:rotate(45deg);
+top:50px;
+left:40px;
+font-weight:bold;
 }
 
-@keyframes fall{
-  from{transform:translateY(-30px);opacity:1;}
-  to{transform:translateY(260px);opacity:0;}
-}
-
-/* وضعيات الرقص */
-.pose1{animation:pose1 .6s infinite alternate!important;}
-.pose2{animation:pose2 .6s infinite alternate!important;}
-.pose3{animation:pose3 .6s infinite alternate!important;}
-
-@keyframes pose1{
-  from{transform:translate(-50%,-50%) rotate(-6deg) scale(1.05);}
-  to{transform:translate(-50%,-50%) rotate(6deg) scale(1.05);}
-}
-@keyframes pose2{
-  from{transform:translate(-50%,-50%) rotate(0deg) scale(1.08);}
-  to{transform:translate(-50%,-50%) rotate(0deg) scale(.98);}
-}
-@keyframes pose3{
-  from{transform:translate(-50%,-50%) rotate(4deg) scale(1.03);}
-  to{transform:translate(-50%,-50%) rotate(-4deg) scale(1.03);}
-}
-
-#hint{
-  position:absolute;
-  bottom:15px;
-  width:100%;
-  text-align:center;
-  color:white;
-  font-size:17px;
-  text-shadow:0 2px 6px rgba(0,0,0,.6);
-  z-index:12;
+@keyframes beat{
+0%{transform:rotate(-45deg) scale(1);}
+50%{transform:rotate(-45deg) scale(1.2);}
+100%{transform:rotate(-45deg) scale(1);}
 }
 </style>
 </head>
+
 <body>
 
-<div id="scene">
-
-  <div id="bubble"></div>
-  <img id="kitty" src="kitty.png">
-  <div id="hint">إلمسي هالو كيتي 🌸</div>
-  <audio id="song" src="EI2oxQd95z4.mp3"></audio>
-
+<div class="heart">
+<div class="text">T.M</div>
 </div>
-
-<script>
-const kitty  = document.getElementById("kitty");
-const bubble = document.getElementById("bubble");
-const song   = document.getElementById("song");
-const hint   = document.getElementById("hint");
-
-let started=false;
-let step=0;
-let typingTimer=null;
-let moveTimer=null;
-let fxTimer=null;
-let poseTimer=null;
-
-/* النصوص مع الشعر */
-const texts=[
-  "أنتَ الحبيبُ الذي أرجو مَحبتَهُ\nوما سِواكَ بقلبي قطُّ مَسكُونُ",
-  "لو كُنتَ تَعلمُ ما في القلبِ من شَغَفٍ\nلَعذرتَ قلباً بحبِّكَ اليومَ مَفتُونُ",
-  "مرحبا يا سوسو 💗",
-  "جيت أطمن عليك وأقولك إنك حلون ول تزعلي ا 🌸",
-  "لا تخلي شي يكسّر خاطرك لانك 😂😂✨",
-  "الدنيا لسه فيها أشياء جيده ممتازه  💖",
-  "أنا بتمنى تبتسمي  🌷"
-];
-
-/* تحرك فقط بمدى صغير */
-function moveSmall(){
-  const cx = window.innerWidth/2;
-  const cy = window.innerHeight/2;
-  const rangeX = 90;
-  const rangeY = 70;
-  const x = cx + (Math.random()*rangeX*2-rangeX);
-  const y = cy + (Math.random()*rangeY*2-rangeY);
-  kitty.style.left = x+"px";
-  kitty.style.top  = y+"px";
-}
-
-/* كتابة ناعمة */
-function typeText(text){
-  if(typingTimer) clearInterval(typingTimer);
-
-  bubble.style.display="block";
-  bubble.innerText="";
-
-  const r=kitty.getBoundingClientRect();
-  bubble.style.left=(r.left+r.width/2)+"px";
-  bubble.style.top =(r.top-95)+"px";
-  bubble.style.transform="translateX(-50%)";
-
-  let i=0;
-  typingTimer=setInterval(()=>{
-    bubble.innerText+=text[i];
-    i++;
-    if(i>=text.length){
-      clearInterval(typingTimer);
-      typingTimer=null;
-    }
-  },50);  // سرعة الكتابة ناعمة
-}
-
-/* مؤثرات مستمرة */
-function startFX(){
-  fxTimer=setInterval(()=>{
-    const el=document.createElement("div");
-    el.className="fx";
-    const arr=["🌸","💖","✨","🌷"];
-    el.innerText=arr[Math.floor(Math.random()*arr.length)];
-    el.style.left=Math.random()*window.innerWidth+"px";
-    el.style.top="-20px";
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),3500);
-  },450);
-}
-
-/* وضعيات الرقص */
-function startPoses(){
-  const poses=["pose1","pose2","pose3"];
-  let i=0;
-  poseTimer=setInterval(()=>{
-    kitty.classList.remove("pose1","pose2","pose3");
-    kitty.classList.add(poses[i]);
-    i++;
-    if(i>=poses.length) i=0;
-  },700);
-}
-
-/* حركة بطيئة أثناء الرقص */
-function startSmallDanceMove(){
-  moveTimer=setInterval(()=>{
-    moveSmall();
-  },1800);
-}
-
-/* نهاية الأغنية */
-song.addEventListener("ended",()=>{
-  clearInterval(poseTimer);
-  clearInterval(moveTimer);
-  kitty.classList.remove("pose1","pose2","pose3");
-  typeText("بدي أودعك… وبوصيكي  تخرسي   💗");
-});
-
-/* البداية */
-function startShow(){
-  if(started) return;
-  started=true;
-  hint.style.display="none";
-  startFX();
-  moveSmall();
-  typeText(texts[0]);
-
-  const talkTimer=setInterval(()=>{
-    step++;
-    moveSmall();
-    if(step<texts.length){
-      typeText(texts[step]);
-    }
-    if(step===texts.length){
-      clearInterval(talkTimer);
-      song.play().catch(()=>{});
-      startPoses();
-      startSmallDanceMove();
-    }
-  },3500);
-}
-
-kitty.addEventListener("click",startShow);
-kitty.addEventListener("touchstart",startShow);
-
-</script>
 
 </body>
 </html>
-
-
-
-
